@@ -18,5 +18,9 @@ def add_item(item:Item):
         item_dict.update({"item_with_tax":price_with_tax})
     return item_dict
 
-def update_item(itemId:int, item:Item):
-    return {"item Id":itemId,**item.model_dump()}
+def update_item(itemId:int, item:Item, q:str | None=None):
+    item_dict = {"item Id":itemId,**item.model_dump()}
+    if q is not None:
+        item_dict.update({"q":q})
+        
+    return item_dict
