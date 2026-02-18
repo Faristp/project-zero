@@ -17,3 +17,7 @@ async def get_items(skip:int = 0, limit: int = 10):
 @router.post("/")
 async def create_item(item:Item):
     return item_service.add_item(item)
+
+@router.put("/{itemId}")
+async def update_item(itemId:int,item:Item):
+    return item_service.update_item(itemId,item)

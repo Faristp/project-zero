@@ -17,3 +17,6 @@ def add_item(item:Item):
         price_with_tax = item.price+item.tax
         item_dict.update({"item_with_tax":price_with_tax})
     return item_dict
+
+def update_item(itemId:int, item:Item):
+    return {"item Id":itemId,**item.model_dump()}
