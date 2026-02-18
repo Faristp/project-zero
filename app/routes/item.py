@@ -7,9 +7,15 @@ router = APIRouter(
 )
 
 @router.get("/{item_number}")
-async def get_item(item_number:int):
-    return {"item ":item_number}
+async def get_item(item_number:int, q:str | None = None, short:bool = False):
+    item = {"item_number":item_number}
+    if q:
+        item.update({"q":q})
+    if not short:
+        item.update({"description": "This is wonderfull item with long description"})
+    return item
 
 @router.get("/")
 async def get_items(skip:int = 0, limit: int = 10):
     return fake_items_db[skip:skip+limit]
+
