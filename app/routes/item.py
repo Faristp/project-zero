@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from app.db.items import fake_items_db
 
+from app.services import item as item_service
 router = APIRouter(
     prefix="/items",
     tags=["items"]
@@ -8,14 +8,9 @@ router = APIRouter(
 
 @router.get("/{item_number}")
 async def get_item(item_number:int, q:str | None = None, short:bool = False):
-    item = {"item_number":item_number}
-    if q:
-        item.update({"q":q})
-    if not short:
-        item.update({"description": "This is wonderfull item with long description"})
-    return item
+    return item_service.get_item(item_number,q,short)
 
 @router.get("/")
 async def get_items(skip:int = 0, limit: int = 10):
-    return fake_items_db[skip:skip+limit]
+    return item_service.get_items(skip,limit)
 
