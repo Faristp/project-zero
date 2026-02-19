@@ -9,7 +9,7 @@ router = APIRouter(
 )
 
 @router.get("/{item_number}")
-async def get_item(item_number:int, q:str | None = None, short:bool = False):
+async def get_item(item_number:int, q:Annotated[list[str] | None, Query()] = None, short:bool = False):
     return item_service.get_item(item_number,q,short)
 
 @router.get("/")
