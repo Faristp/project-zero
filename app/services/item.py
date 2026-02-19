@@ -1,7 +1,8 @@
-from app.db.items import fake_items_db
+import random
+from typing import Annotated
+
+from app.db.items import data
 from app.models.item import Item
-def get_items(skip:int,limit:int):
-    return fake_items_db[skip:skip+limit]
 
 def get_item(item_number:int, q:str | None = None, short:bool = False):
     item = {"item_number":item_number}
@@ -21,6 +22,14 @@ def add_item(item:Item):
 def update_item(itemId:int, item:Item, q:str | None=None):
     item_dict = {"item Id":itemId,**item.model_dump()}
     if q is not None:
-        item_dict.update({"q":q})
-        
+        item_dict.update({"q":q}) 
     return item_dict
+
+def read_items(
+    id: Annotated[str | None, ()] = None,
+):
+    if id:
+        item = data.get(id)
+    else:
+        id, item = random.choice(list(data.items()))
+    return {"id": id, "name": item}
